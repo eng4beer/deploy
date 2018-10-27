@@ -1,0 +1,8 @@
+state: present
+cloud: fortnebula
+domain: fortnebula.com
+image_name: centos7
+key_name: precision
+flavor_name: m1.medium
+auto_ip: yes
+network_name: softwarefactory

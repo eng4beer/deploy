@@ -1,15 +1,74 @@
----
-- name: Deploy on OpenStack
-  hosts: localhost
-  gather_facts: false
-  tasks:
-  - name: Deploy an instance
-    os_server:
-      state: "{{ state }}"
-      name: "{{ instance_name }}"
-      image: "{{ image_name }}"
-      key_name: "{{ key_name }}"
-      wait: yes
-      flavor: "{{ flavor_name }}"
-      auto_floating_ip: "{{ auto_ip }}"
-      network: "{{ network_name }}"
+- name: Deploy small instances
+  os_server:
+    state: "{{ state }}"
+    cloud: "{{ cloud }}"
+    name: "{{ item }}.{{ domain }}"
+    image: "{{ image_name }}"
+    key_name: "{{ key_name }}"
+    wait: yes
+    flavor: m1.small
+    auto_floating_ip: "{{ auto_ip }}"
+    network: "{{ network_name }}"
+  with_items:
+    - install-server
+    - gateway
+    - cauth
+    - managesf
+    - gitweb
+    - zuul-scheduler
+    - zuul-web
+    - lodgeit
+    - gerritbot
+    - job-logs-gearman-client
+    - job-logs-gearman-worker
+    - mirror
+    - storyboard-webclient
+    - repoxplorer
+    - firehose
+    - pages
+    - hydrant  
+    - cgit
+    - hound
+
+- name: Deploy medium instances
+  os_server:
+    state: "{{ state }}"
+    cloud: "{{ cloud }}"
+    name: "{{ item }}.{{ domain }}"
+    image: "{{ image_name }}"
+    key_name: "{{ key_name }}"
+    wait: yes
+    flavor: m1.medium
+    auto_floating_ip: "{{ auto_ip }}"
+    network: "{{ network_name }}"
+  with_items:
+    - influxdb
+    - nodepool-launcher
+    - zuul-merger  
+    - rabbitmq
+    - mysql
+    - grafana
+    - logserver
+    - kibana
+    - etherpad
+    
+- name: Deploy large instances
+  os_server:
+    state: "{{ state }}"
+    cloud: "{{ cloud }}"
+    name: "{{ item }}.{{ domain }}"
+    image: "{{ image_name }}"
+    key_name: "{{ key_name }}"
+    wait: yes
+    flavor: m1.large
+    auto_floating_ip: "{{ auto_ip }}"
+    network: "{{ network_name }}"
+  with_items:
+    - logstash
+    - gerrit
+    - zookeeper
+    - nodepool-builder
+    - zuul-executor
+    - elasticsearch
+    - storyboard
+    - murmur

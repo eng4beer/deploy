@@ -1,15 +1,8 @@
 ---
-- name: Deploy on OpenStack
+- name: Deploy Software Factory
   hosts: localhost
   gather_facts: false
+  vars_files: 
+    - group_vars/main.yml
   tasks:
-  - name: Deploy an instance
-    os_server:
-      state: "{{ state }}"
-      name: "{{ instance_name }}"
-      image: "{{ image_name }}"
-      key_name: "{{ key_name }}"
-      wait: yes
-      flavor: "{{ flavor_name }}"
-      auto_floating_ip: "{{ auto_ip }}"
-      network: "{{ network_name }}"
+  - import_tasks: tasks/provision-instances.yml
